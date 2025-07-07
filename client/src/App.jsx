@@ -8,13 +8,13 @@ function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('https://your-backend-url.onrender.com/api/products')
+    fetch('https://ecommerce-backend-sjrm.onrender.com/api/products')
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
 
   const login = () => {
-    fetch('https://your-backend-url.onrender.com/api/login', {
+    fetch('https://ecommerce-backend-sjrm.onrender.com/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
