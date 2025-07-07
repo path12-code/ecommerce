@@ -11,6 +11,10 @@ let products = [
   { id: 2, name: 'Camisa', price: 50 },
 ];
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Servidor funcionando correctamente' });
+});
+
 app.get('/api/products', (req, res) => {
   res.json(products);
 });
@@ -24,6 +28,6 @@ app.post('/api/login', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
