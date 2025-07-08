@@ -60,11 +60,20 @@ function App() {
       .then((data) => {
         setMessage(data.message);
         setToken(data.token);
+        // Limpiar los campos después del login exitoso
+        setEmail('');
+        setPassword('');
       })
       .catch(() => setMessage('Error en login'));
   };
 
-  const filteredProducts = products.filter(p => 
+  const logout = () => {
+    setToken('');
+    setMessage('');
+    localStorage.removeItem('token');
+  };
+
+  const filteredProducts = products.filter(p =>
     p.title.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -72,11 +81,18 @@ function App() {
     <div>
       <h1>Tienda Online</h1>
 
-      {token ? <p>✅ Sesión iniciada</p> : null}
+      {token ? (
+        <div style={{ marginBottom: '1rem' }}>
+          <p>✅ Sesión iniciada</p>
+          <button onClick={logout} style={{ marginLeft: '1rem' }}>
+            Cerrar Sesión
+          </button>
+        </div>
+      ) : null}
 
-      <input 
-        placeholder="Buscar productos" 
-        onChange={e => setSearch(e.target.value)} 
+      <input
+        placeholder="Buscar productos"
+        onChange={e => setSearch(e.target.value)}
         style={{ marginBottom: '1rem', padding: '0.5rem' }}
       />
 
@@ -110,8 +126,17 @@ function App() {
       {!token && (
         <>
           <h2>Login</h2>
-          <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
-          <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+          <input 
+            placeholder="Email" 
+            value={email}
+            onChange={e => setEmail(e.target.value)} 
+          />
+          <input 
+            type="password" 
+            placeholder="Password" 
+            value={password}
+            onChange={e => setPassword(e.target.value)} 
+          />
           <button onClick={login}>Iniciar Sesión</button>
           <p>{message}</p>
         </>
